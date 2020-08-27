@@ -11,9 +11,12 @@ export default function List(props) {
       <div className='List-cards'>
         {props.cards.map((card) =>
           <Card
+            handleDelete={props.handleDelete}
             key={card.id}
+            id={card.id}
             title={card.title}
             content={card.content}
+            listKey={props.id}
           />
         )}
         <button
