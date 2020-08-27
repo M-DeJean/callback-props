@@ -2,10 +2,20 @@ import React, { Component } from 'react';
 import List from './List'
 import './App.css';
 
-function omit(obj, keyToOmit) {
-  let {[keyToOmit]: _, ...rest} = obj;
-  return rest;
+// function omit(obj, keyToOmit) {
+//   let {[keyToOmit]: _, ...rest} = obj;
+//   return rest;
+// }
+const newRandomCard = () => {
+  const id = Math.random().toString(36).substring(2, 4)
+    + Math.random().toString(36).substring(2, 4);
+  return {
+    id,
+    title: `Random Card ${id}`,
+    content: 'lorem ipsum',
+  }
 }
+
 class App extends Component {
 
   state = {
@@ -61,6 +71,33 @@ class App extends Component {
       this.setState({lists: newLists})
     }
 
+    
+
+  addRandomCard = (id) => {
+      console.log(this.state.lists)
+      const newCard = newRandomCard();
+      const newLists = [...this.state.lists];
+      const newCards = {...this.state.allCards, [newCard.id]:newCard};
+      const listIndex = this.state.lists.findIndex(list => list.id === id)
+
+      const thisList = newLists[listIndex];
+      console.log(thisList);
+      console.log(newCard);
+      const newCardIds = [...thisList.cardIds, newCard.id]
+      console.log(newCardIds);
+      thisList.cardIds = newCardIds;
+      newLists[listIndex] = thisList;
+      console.log(newCards)
+      console.log(newLists);
+      
+      this.setState({
+        lists: newLists,
+        allCards: newCards
+      })
+
+    }
+  
+  
   render() {
     return (
       <main className='App'>
@@ -69,8 +106,10 @@ class App extends Component {
         </header>
         <div className='App-list'>
           {this.state.lists.map(list => (
+
             <List
               handleDelete={this.handleDeleteItem}
+              addCard={this.addRandomCard}
               key={list.id}
               id={list.id}
               header={list.header}
