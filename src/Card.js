@@ -3,10 +3,8 @@ import './Card.css';
 // import './Messages.css';
 
 // make the ReactDOM available, necessary for rendering the component
-import ReactDOM from 'react-dom';
 
 // make the App component available
-import App from './App';
 
 export default function Card(props) {
   return (
